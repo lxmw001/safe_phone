@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="phone.safe.lx.com.safephone">
+
+    <!-- Adding the permission -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name">
+
+        <service
+            android:name=".ServiceDemo"
+            android:enabled="true">
+            <intent-filter>
+                <action
+                    android:name = "phone.safe.lx.com.safephone.ServiceDemo">
+                </action>
+            </intent-filter>
+        </service>
+
+
+        <!-- Declaring broadcast receiver for BOOT_COMPLETED event. -->
+        <receiver
+            android:name=".AutoStart"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <!--<activity android:name=".HideActivity">-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN" />-->
+                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        <!--</activity>-->
+
+
+
+    </application>
+
+</manifest>
