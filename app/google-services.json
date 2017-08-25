@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "510160656177",
+    "firebase_url": "https://safephone-d7a3d.firebaseio.com",
+    "project_id": "safephone-d7a3d",
+    "storage_bucket": "safephone-d7a3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510160656177:android:24ee0f164c779ebf",
+        "android_client_info": {
+          "package_name": "phone.safe.lx.com.safephone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510160656177-djmdrt2s95n3rp1dtqeb2tdoagdlekig.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "phone.safe.lx.com.safephone",
+            "certificate_hash": "c54c9f0934f6357468a4539cc99645a37d164e5f"
+          }
+        },
+        {
+          "client_id": "510160656177-a4g1mr3u6btbckdt3cmnci7rov07d4rn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBdFG2Q0vGtFEywyLjBaMdJ0QCykLK744"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510160656177-a4g1mr3u6btbckdt3cmnci7rov07d4rn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

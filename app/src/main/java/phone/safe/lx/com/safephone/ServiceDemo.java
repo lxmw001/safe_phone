@@ -11,6 +11,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import phone.safe.lx.com.safephone.gps.GpsHandler;
+import phone.safe.lx.com.safephone.gps.LocationHandler;
 
 public class ServiceDemo extends Service {
 
@@ -33,6 +34,8 @@ public class ServiceDemo extends Service {
         Log.d(TAG, "onStart");
         GpsHandler gpsHandler = new GpsHandler();
         gpsHandler.turnGPSOn();
+        LocationHandler locationHandler = new LocationHandler(this);
+        locationHandler.getLocation();
     }
 
     public void onDestroy() {

@@ -3,11 +3,9 @@
 # CHANGE THESE
 app_package="phone.safe.lx.com.safephone"
 dir_app_name="SafePhone"
-MAIN_ACTIVITY="HideActivity"
 
 ADB="adb" # how you execute adb
 $ADB_SH="$ADB shell" # this script assumes using `adb root`. for `adb su` see `Caveats`
-
 path_sysapp="/system/priv-app" # assuming the app is priviledged
 apk_host="./app/build/outputs/apk/app-debug.apk"
 apk_name=$dir_app_name".apk"
@@ -21,14 +19,15 @@ rm -f $apk_host
 ./gradlew assembleDebug || exit -1 # exit on failure
 
 # Install APK: using adb root
+
 $ADB root 2> /dev/null
 $ADB remount # mount system
 $ADB push $apk_host $apk_target_sys
 
 # Give permissions
-$ADB_SH pwd
+#$ADB pwd
 # $ADB_SH "chmod 755 $apk_target_dir"
-# $ADB_SH "chmod 644 $apk_target_sys"
+ $ADB_SH "chmod 775 $apk_target_sys"
 
 #Unmount system
 $ADB_SH "mount -o remount,ro /"
