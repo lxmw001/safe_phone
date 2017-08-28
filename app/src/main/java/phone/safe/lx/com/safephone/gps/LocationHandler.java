@@ -11,14 +11,10 @@ import android.support.v4.app.ActivityCompat;
 
 import phone.safe.lx.com.safephone.comunication.ShareData;
 
-/**
- * Created by luis on 8/25/17.
- */
-
 public class LocationHandler {
 
     private Context context;
-    private LocationManager mLocationManager;
+    private LocationManager locationManager;
     private int LOCATION_REFRESH_TIME = 100;
     private int LOCATION_REFRESH_DISTANCE = 100;
 
@@ -29,7 +25,7 @@ public class LocationHandler {
 
     public void getLocation() {
         System.out.println("Obteniendo localizacion");
-        mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -41,7 +37,7 @@ public class LocationHandler {
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_REFRESH_TIME,
                 LOCATION_REFRESH_DISTANCE, mLocationListener);
     }
 
@@ -50,7 +46,7 @@ public class LocationHandler {
         public void onLocationChanged(final Location location) {
             //your code here
             System.out.println("Ubicacion Actual: " + location);
-            ShareData.shareLocation(location);
+            ShareData.shareLocation(location, context);
         }
 
         @Override

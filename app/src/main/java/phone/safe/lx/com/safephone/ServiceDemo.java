@@ -1,21 +1,16 @@
 package phone.safe.lx.com.safephone;
 
-/**
- * Created by luis on 8/23/17.
- */
-
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import phone.safe.lx.com.safephone.gps.GpsHandler;
 import phone.safe.lx.com.safephone.gps.LocationHandler;
 
 public class ServiceDemo extends Service {
 
-    private static final String TAG = "MyService";
+    private static final String TAG = "Service";
 
     public IBinder onBind(Intent intent) {
         return null;
@@ -26,21 +21,14 @@ public class ServiceDemo extends Service {
     }
 
     public void onStart(Intent intent, int startId) {
-        System.out.println("hola");
-//        Intent intents = new Intent(getBaseContext(),HideActivity.class);
-//        intents.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivity(intents);
-        Toast.makeText(this, "My Service Started", Toast.LENGTH_LONG).show();
         Log.d(TAG, "onStart");
-        GpsHandler gpsHandler = new GpsHandler();
+        GpsHandler gpsHandler = new GpsHandler(this);
         gpsHandler.turnGPSOn();
         LocationHandler locationHandler = new LocationHandler(this);
         locationHandler.getLocation();
     }
 
     public void onDestroy() {
-        System.out.println("stop");
-        Toast.makeText(this, "My Service Stopped", Toast.LENGTH_LONG).show();
         Log.d(TAG, "onDestroy");
     }
 

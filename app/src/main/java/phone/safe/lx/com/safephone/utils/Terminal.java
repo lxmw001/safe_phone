@@ -2,13 +2,9 @@ package phone.safe.lx.com.safephone.utils;
 
 import java.io.DataOutputStream;
 
-/**
- * Created by luis on 8/25/17.
- */
+public class Terminal {
 
-public class RunCommands {
-
-    public static void asRoot(String[] commands){
+    public static void runAsRoot(String[] commands){
         try {
             Process p = Runtime.getRuntime().exec("su");
             DataOutputStream os = new DataOutputStream(p.getOutputStream());
