@@ -22,19 +22,23 @@ public class ShareData {
         DatabaseReference currentLocationRef = database.getReference("deviceData/" + macAddress + "/location");
         DatabaseReference navigationRef = database.getReference("deviceData/" + macAddress + "/navigation/" + DateUtils.getCurrentDate());
 
-        currentLocationRef.setValue(getLocationMap(location));
-        navigationRef.push().setValue(getLocationMap(location));
+        currentLocationRef.setValue(getLocationMap(location, true));
+        navigationRef.push().setValue(getLocationMap(location, false));
     }	
 
     private static String getMacAddress(Context context) {
     	return WifiUtils.getMacAddress(context);
     }
 
-    private static Map getLocationMap(Location location) {
+    private static Map getLocationMap(Location location, boolean fullDate) {
+        String dateKey = fullDate ? "date" : "time";
+        String dateValue = fullDate ? DateUtils.getCurrentDateAndTime() : DateUtils.getCurrentTime();
+
+
         Map<String, Object> locationMap = new HashMap<String, Object>();
         locationMap.put("latitude", location.getLatitude());
         locationMap.put("longitude", location.getLongitude());
-        locationMap.put("date", DateUtils.getCurrentDateAndTime());
+        locationMap.put(dateKey, dateValue);
         return locationMap;
     }
 }
