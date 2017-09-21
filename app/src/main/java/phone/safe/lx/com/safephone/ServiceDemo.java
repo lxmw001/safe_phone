@@ -10,6 +10,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.ImageView;
 
+import phone.safe.lx.com.safephone.comunication.ShareData;
 import phone.safe.lx.com.safephone.gps.GpsHandler;
 import phone.safe.lx.com.safephone.gps.LocationHandler;
 
@@ -18,6 +19,7 @@ public class ServiceDemo extends Service {
     private static final String TAG = "Service";
     private ImageView iv_image;
     private SurfaceTexture surfaceTexture;
+//    private CameraViewService cameraViewService;
 
     public IBinder onBind(Intent intent) {
         return null;
@@ -27,7 +29,8 @@ public class ServiceDemo extends Service {
         super.onCreate();
 
         int index = getFrontCameraId();
-        System.out.println(index + "          <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+//        System.out.println(index + "          <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+//        cameraViewService = new CameraViewService(getApplicationContext());
 //        if (index == -1){
 ////            Toast.makeText(getApplicationContext(), "No front camera", Toast.LENGTH_LONG).show();
 //        }
@@ -42,10 +45,8 @@ public class ServiceDemo extends Service {
 
     public void onStart(Intent intent, int startId) {
         Log.d(TAG, "onStart");
-        GpsHandler gpsHandler = new GpsHandler(this);
-        gpsHandler.turnGPSOnRoot();
-        LocationHandler locationHandler = new LocationHandler(this);
-        locationHandler.getLocation();
+
+        ShareData.retrieveData(getBaseContext());
     }
 
     public void onDestroy() {
