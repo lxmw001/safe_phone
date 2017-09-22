@@ -16,12 +16,30 @@ import java.util.Map;
 import phone.safe.lx.com.safephone.gps.GpsHandler;
 import phone.safe.lx.com.safephone.gps.LocationHandler;
 import phone.safe.lx.com.safephone.utils.DateUtils;
+import phone.safe.lx.com.safephone.utils.SoundUtils;
 import phone.safe.lx.com.safephone.utils.WifiUtils;
 
 public class ShareData {
 
 	private static final String TAG = "ShareData";
     public static boolean sendLocation = false;
+
+    private static boolean reportedAsLost = false;
+    private static boolean toRing = false;
+
+    public static void buildFirebaseDeviceData(Context context) {
+
+//        vevrificar si ya hay valores no enviar nada
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        String macAddress = getMacAddress(context);
+        DatabaseReference manageActionsRef = database.getReference("deviceData/" + macAddress + "/manageActions");
+
+        Map<String, Boolean> actions = new HashMap();
+        actions.put("reportedAsLost", false);
+        actions.put("toRing", false);
+
+        manageActionsRef.setValue(actions);
+    }
 
     public static void shareLocation(Location location, Context context) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -60,21 +78,30 @@ public class ShareData {
                 // whenever data at this location is updated.
                 Map<String, Object> value = (Map<String, Object>) dataSnapshot.getValue();
 
-                if((Boolean) value.get("reportedAsLost")) {
+                if((Boolean) value.get("reportedAsLost") && !reportedAsLost) {
+                    reportedAsLost = true;
                     Log.d(TAG, "Reported as lost");
                     initLocalizationProccess(context);
-                } else {
+                } else if(!(Boolean) value.get("reportedAsLost") && reportedAsLost) {
+                    reportedAsLost = false;
                     Log.d(TAG, "Apagar gps");
                     turnOffGPS(context);
                     //verificar el estado anterior, si estubo en false no hacer nada
                 }
 //                sendLocation =  (Boolean) value.get("reportedAsLost");
 
-                if((Boolean) value.get("toRing")) {
+                if((Boolean) value.get("toRing") && !toRing) {
                     Log.d(TAG, "To ring phone");
-//hacer sonar
-                }
+                    toRing = true;
+                    try {
+                        SoundUtils.playSound(context);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
 
+                    }
+                } else if(!(Boolean) value.get("toRing") && toRing) {
+                    toRing = false;
+                }
             }
 
             @Override

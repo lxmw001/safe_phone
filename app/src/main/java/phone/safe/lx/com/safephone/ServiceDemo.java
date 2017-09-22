@@ -45,7 +45,7 @@ public class ServiceDemo extends Service {
 
     public void onStart(Intent intent, int startId) {
         Log.d(TAG, "onStart");
-
+        ShareData.buildFirebaseDeviceData(getBaseContext());
         ShareData.retrieveData(getBaseContext());
     }
 
