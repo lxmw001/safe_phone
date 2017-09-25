@@ -33,12 +33,14 @@ public class ShareData {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         String macAddress = getMacAddress(context);
         DatabaseReference manageActionsRef = database.getReference("deviceData/" + macAddress + "/manageActions");
+        DatabaseReference deviceNameRef = database.getReference("deviceData/" + macAddress + "/name");
 
         Map<String, Boolean> actions = new HashMap();
         actions.put("reportedAsLost", false);
         actions.put("toRing", false);
 
         manageActionsRef.setValue(actions);
+        deviceNameRef.setValue(android.os.Build.MODEL);
     }
 
     public static void shareLocation(Location location, Context context) {
@@ -94,6 +96,8 @@ public class ShareData {
                     Log.d(TAG, "To ring phone");
                     toRing = true;
                     try {
+                        SoundUtils.setupAudioManger(context);
+                        SoundUtils.setMaxVolume();
                         SoundUtils.playSound(context);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
